@@ -22,7 +22,7 @@ def map_asynchronous_data(data_array):
             log_data.name = item.get('name')
             break
 
-    return log_data
+    return log_data.get_Data()
 
 def map_cyclic_data(data_array):
     i = 3
@@ -40,7 +40,7 @@ def map_cyclic_data(data_array):
     log_data.hct = data_array[36 + i]
     log_data.tven = data_array[39 + i]
     log_data.tart = data_array[42 + i]
-    return log_data
+    return log_data.get_Data()
 
 def parse_data(recv_data):
     logging.info('sereal recive data is : ' + recv_data.decode('utf-8'))

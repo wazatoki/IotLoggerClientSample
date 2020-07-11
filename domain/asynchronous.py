@@ -8,6 +8,17 @@ class Log_data:
     name = ""
     device_id = ""
 
+    def get_Data(self):
+
+        return {
+            "version": self.version,
+            "datetime": self.dt,
+            "deviceID": self.device_id,
+            "code": self.code,
+            "category": self.category,
+            "name": self.name,
+        }
+
 index = [
     {"code": "1000", "category": "P-Ven", "name": "OK"},
     {"code": "1001", "category": "P-Ven", "name": "Over upper warning limit"},
