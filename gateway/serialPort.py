@@ -14,7 +14,7 @@ def map_asynchronous_data(data_array):
     log_data = asynchronous.Log_data()
 
     for item in asynchronous.index:
-        if data_array[4] == item.get('code'):
+        if data_array[4] == ('0000' + item.get('code')):
             log_data.version = data_array[1]
             log_data.dt = datetime.strptime(data_array[2]+' '+data_array[3], '%d.%m.%Y %H:%M:%S')
             log_data.code = item.get('code')
@@ -43,9 +43,11 @@ def map_cyclic_data(data_array):
     return log_data.get_Data()
 
 def parse_data(recv_data):
-    logging.info('sereal recive data is : ' + recv_data.decode('utf-8'))
-    r = recv_data.strip(';').decode('utf-8')
-    
+    str_data = recv_data.decode('utf-8')
+    logging.info('sereal recive data is : ' + str_data)
+    print(str_data)
+    r = str_data.split(';')
+
     if r[0] == 'ZT':
         log_data = map_cyclic_data(r)
         http.post_cyclic(log_data)
@@ -54,11 +56,12 @@ def parse_data(recv_data):
         http.post_asynchronous(log_data)
     else:
         logging.info('sereal recive data is broken : ' + recv_data.decode('utf-8'))
+        logging.info('sereal recive data r[0] : ' + r[0])
 
 def watch():
 
     try:
-        with serial.Serial(config.serial_port, baudrate=115200, bytesize=8, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE,timeout=1) as comport:
+        with serial.Serial(config.serial_port, baudrate=115200, bytesize=8, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE,timeout=None) as comport:
             recv_data = comport.readline()
             parse_data(recv_data)
     except serial.serialutil.SerialException :
