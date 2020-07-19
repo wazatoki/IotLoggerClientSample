@@ -67,8 +67,7 @@ def watch():
     except serial.serialutil.SerialException :
         logging.error('could not open port ')
 
-    t=threading.Timer(2, watch)
-    t.start()
+    watch()
 
 def start_watch():
     logging.info('Iot logger client start')
