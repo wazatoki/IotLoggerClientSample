@@ -20,6 +20,7 @@ def map_asynchronous_data(data_array):
             log_data.code = item.get('code')
             log_data.category = item.get('category')
             log_data.name = item.get('name')
+            log_data.message_type = item.get('messageType')
             break
 
     return log_data.get_Data()
