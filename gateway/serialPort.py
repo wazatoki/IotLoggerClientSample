@@ -56,8 +56,13 @@ def parse_data(recv_data):
         log_data = map_asynchronous_data(r)
         http.post_asynchronous(log_data)
     else:
-        logging.info('sereal recive data is broken : ' + recv_data.decode('utf-8'))
-        logging.info('sereal recive data r[0] : ' + r[0])
+        logging.info(datetime_str() + ' sereal recive data is broken : ' + recv_data.decode('utf-8'))
+        logging.info(datetime_str() + ' sereal recive data r[0] : ' + r[0])
+
+
+def datetime_str():
+    dt = datetime.now()
+    return dt.strftime('%Y/%m/%d %H:%M:%S')
 
 def watch():
 
@@ -66,12 +71,12 @@ def watch():
             recv_data = comport.readline()
             parse_data(recv_data)
     except serial.serialutil.SerialException :
-        logging.error('could not open port ')
+        logging.error(datetime_str() + ' could not open port ')
         time.sleep(5)
     finally :
         watch()
 
 def start_watch():
-    logging.info('Iot logger client start')
+    logging.info(datetime_str() + ' Iot logger client start')
     t=threading.Thread(target=watch)
     t.start()

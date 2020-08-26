@@ -1,6 +1,7 @@
 import logging
 import json
 from pytz import timezone
+from datetime import datetime
 
 import requests
 
@@ -18,7 +19,7 @@ def post_asynchronous(data):
         headers={'Content-Type': 'application/json'})
 
     if response.status_code >= 400 and response.status_code < 600 :
-        logging.error(response.text)
+        logging.error(datetime_str() + " " + response.text)
 
 def post_cyclic(data):
 
@@ -32,4 +33,8 @@ def post_cyclic(data):
         headers={'Content-Type': 'application/json'})
 
     if response.status_code >= 400 and response.status_code < 600 :
-        logging.error(response.text)
+        logging.error(datetime_str() + " " + response.text)
+
+def datetime_str():
+    dt = datetime.now()
+    return dt.strftime('%Y/%m/%d %H:%M:%S')
