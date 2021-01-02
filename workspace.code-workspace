@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"python.linting.pylintPath": "/home/dev/projects/IotLoggerClientSample/.venv/bin/pylint",
+		"python.pipenvPath": "/home/dev/.anyenv/envs/pyenv/shims/pipenv",
+		"python.pythonPath": "/home/dev/projects/IotLoggerClientSample/.venv/bin/python"
+	}
+}

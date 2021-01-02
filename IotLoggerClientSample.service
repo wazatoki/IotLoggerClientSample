@@ -1,7 +1,7 @@
 [Unit]
 Description = systemd setteing for IotLogger client
 After=network-online.target
-ConditionPathExists=/opt/IotLoggerClientSample
+ConditionPathExists=/home/pi/app/IotLoggerClientSample
 
 [Service]
 WorkingDirectory=/home/pi/app/IotLoggerClientSample/
