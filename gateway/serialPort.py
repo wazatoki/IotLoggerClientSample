@@ -7,7 +7,7 @@ import serial
 
 from config import config
 from gateway import http
-from domain import cyclic_data,asynchronous
+from domain import cyclic_data,asynchronous, message
 
 def map_asynchronous_data(data_array):
 
@@ -45,19 +45,31 @@ def map_cyclic_data(data_array):
 
 def parse_data(recv_data):
     str_data = recv_data.decode('utf-8')
-    logging.info('sereal recive data is : ' + str_data)
-    print(str_data)
+    # logging.info('sereal recive data is : ' + str_data)
+    # print(str_data)
     r = str_data.split(';')
 
     if r[0] == 'ZT':
         log_data = map_cyclic_data(r)
         http.post_cyclic(log_data)
+        
+        m = message.message_data()
+        m.message = datetime_str() + ' status OK '
+        http.post_message(m.get_Data())
     elif r[0] == 'MT':
         log_data = map_asynchronous_data(r)
         http.post_asynchronous(log_data)
+        
+        m = message.message_data()
+        m.message = datetime_str() + ' status OK '
+        http.post_message(m.get_Data())
     else:
-        logging.info(datetime_str() + ' sereal recive data is broken : ' + recv_data.decode('utf-8'))
-        logging.info(datetime_str() + ' sereal recive data r[0] : ' + r[0])
+        m = message.message_data()
+        m.message = datetime_str() + ' sereal recive data is broken : ' + recv_data.decode('utf-8')
+        http.post_message(m.get_Data())
+
+        # logging.info(datetime_str() + ' sereal recive data is broken : ' + recv_data.decode('utf-8'))
+        # logging.info(datetime_str() + ' sereal recive data r[0] : ' + r[0])
 
 
 def datetime_str():
@@ -71,12 +83,21 @@ def watch():
             recv_data = comport.readline()
             parse_data(recv_data)
     except serial.serialutil.SerialException :
-        logging.error(datetime_str() + ' could not open port ')
+        m = message.message_data()
+        m.message = datetime_str() + ' could not open port'
+        http.post_message(m.get_Data())
+        
+        # logging.error(datetime_str() + ' could not open port ')
         time.sleep(5)
     finally :
         watch()
 
 def start_watch():
-    logging.info(datetime_str() + ' Iot logger client start')
+    m = message.message_data()
+    m.message = datetime_str() + ' Iot logger client start'
+    http.post_message(m.get_Data())
+
+    # logging.info(datetime_str() + ' Iot logger client start')
+
     t=threading.Thread(target=watch)
     t.start()

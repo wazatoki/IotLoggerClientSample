@@ -7,6 +7,17 @@ import requests
 
 from config import config
 
+def post_message(data):
+    data['deviceID'] = config.device_id
+
+    response = requests.post(
+        'http://'+ config.http_address+':'+config.http_port+'/api/device/message',
+        json.dumps(data),
+        headers={'Content-Type': 'application/json'})
+
+    if response.status_code >= 400 and response.status_code < 600 :
+        logging.error(datetime_str() + " " + response.text)
+
 def post_asynchronous(data):
 
     data['deviceID'] = config.device_id
