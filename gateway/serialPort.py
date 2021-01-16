@@ -54,18 +54,18 @@ def parse_data(recv_data):
         http.post_cyclic(log_data)
         
         m = message.message_data()
-        m.message = datetime_str() + ' status OK '
+        m.message = ' status OK '
         http.post_message(m.get_Data())
     elif r[0] == 'MT':
         log_data = map_asynchronous_data(r)
         http.post_asynchronous(log_data)
         
         m = message.message_data()
-        m.message = datetime_str() + ' status OK '
+        m.message = ' status OK '
         http.post_message(m.get_Data())
     else:
         m = message.message_data()
-        m.message = datetime_str() + ' sereal recive data is broken : ' + recv_data.decode('utf-8')
+        m.message = ' sereal recive data is broken : ' + recv_data.decode('utf-8')
         http.post_message(m.get_Data())
 
         # logging.info(datetime_str() + ' sereal recive data is broken : ' + recv_data.decode('utf-8'))
@@ -84,7 +84,7 @@ def watch():
             parse_data(recv_data)
     except serial.serialutil.SerialException :
         m = message.message_data()
-        m.message = datetime_str() + ' could not open port'
+        m.message = ' could not open port'
         http.post_message(m.get_Data())
         
         # logging.error(datetime_str() + ' could not open port ')
@@ -94,7 +94,7 @@ def watch():
 
 def start_watch():
     m = message.message_data()
-    m.message = datetime_str() + ' Iot logger client start'
+    m.message = ' Iot logger client start'
     http.post_message(m.get_Data())
 
     # logging.info(datetime_str() + ' Iot logger client start')

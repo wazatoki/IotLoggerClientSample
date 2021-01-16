@@ -19,7 +19,7 @@ def post_message(data):
 
         if response.status_code >= 400 and response.status_code < 600 :
             m = message.message_data()
-            m.message = datetime_str() + ' response server error ' + response.status_code
+            m.message = ' response server error ' + response.status_code
             post_message(m.get_Data())
             # logging.error(datetime_str() + " " + response.text)
     except requests.exceptions.RequestException as e:
@@ -39,7 +39,7 @@ def post_asynchronous(data):
 
         if response.status_code >= 400 and response.status_code < 600 :
             m = message.message_data()
-            m.message = datetime_str() + ' response server error ' + response.status_code
+            m.message = ' response server error ' + response.status_code
             post_message(m.get_Data())
             # logging.error(datetime_str() + " " + response.text)
     except requests.exceptions.RequestException as e:
@@ -59,7 +59,7 @@ def post_cyclic(data):
 
         if response.status_code >= 400 and response.status_code < 600 :
             m = message.message_data()
-            m.message = datetime_str() + ' response server error ' + response.status_code
+            m.message = ' response server error ' + response.status_code
             post_message(m.get_Data())
             # logging.error(datetime_str() + " " + response.text)
     
