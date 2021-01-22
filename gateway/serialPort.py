@@ -89,8 +89,6 @@ def watch():
         
         # logging.error(datetime_str() + ' could not open port ')
         time.sleep(5)
-    finally :
-        watch()
 
 def start_watch():
     m = message.message_data()
@@ -99,5 +97,6 @@ def start_watch():
 
     # logging.info(datetime_str() + ' Iot logger client start')
 
-    t=threading.Thread(target=watch)
-    t.start()
+    while True:
+        watch()
+
